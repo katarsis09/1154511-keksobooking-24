@@ -4,17 +4,13 @@ const getRandomInt = (min, max, round) => {
   const validMin = Math.min(min, max);
   const validMax = Math.max(min, max);
 
-  console.log(validMax);
-  console.log(validMin);
-
 
   if (validMin >= 0 && validMax >= 0) {
     const val = Math.random() * (validMax - validMin) + validMin;
     return val.toFixed(round);
   }
-
-
 };
+
 console.log(getRandomInt (1.1, 1.2, 20));
 
 
@@ -26,5 +22,3 @@ console.log(getRandomInt (1.1, 1.2, 20));
 
 // 4) возвращаю это значение
 
-
-//
