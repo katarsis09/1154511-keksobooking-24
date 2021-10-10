@@ -1,4 +1,3 @@
-
 const TITLE = 'Сдам квартиру с видом на лес';
 const TYPES = [ 'palace', 'flat', 'house', 'bungalow', 'hotel'];
 const CHECKIN = ['12.00', '13.00', '14.00'];
