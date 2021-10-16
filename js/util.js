@@ -25,7 +25,7 @@ export const getRandomElementFromArray = (array) => {
   }
   // 3) получаю случ элемент из массива array и пушу его в arr
   // 4) возвращаю arr
-  return new Set(arr);
+  return Array.from(new Set(arr));
 };
 
 
