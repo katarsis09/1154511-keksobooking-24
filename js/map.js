@@ -1,11 +1,8 @@
 import { getOffer } from './data.js';
-
 const data = getOffer();
 
-console.log(data);
 
-
-const MAP_TYPE_TO_LODGING_NAME = {
+const TYPE_TO_NAME = {
   'flat': 'Квартира',
   'bungalow': 'Бунгало',
   'house': 'Дом',
@@ -13,83 +10,59 @@ const MAP_TYPE_TO_LODGING_NAME = {
   'hotel': 'Отель',
 };
 
-
-// const object = {};
-
-
-// object.c = function(a) {
-//   console.log(a);
-// };
-
-// const object = {
-//   c: function (a) {
-//     console.log(a);
-//   },
-// };
-
-
-// object.c('привет');
-// object.c('пока');
-// object.c('good byu');
-
-
-// const body = document.querySelector('.notice__title');
-
-// console.log(body.textContent);
-
-// body.textContent = 'Привет';
-
-// находим шаблон
+// 1) находим template, берем его контент .content
 const card = document.querySelector('#card').content;
 
-// делаем копию
+// 2) делаем копию элемента из пункта 1
 const copy = card.cloneNode(true);
 
-
-// в этой копии берем то, что нам нужно добавить на страницу (контент)
-const article = copy.querySelector('article.popup');
-
-// создаем коробочку
+// 3) создаем фрагмент
 const fragment = document.createDocumentFragment();
 
-// добавляем контент в коробочку
-fragment.appendChild(article);
+// 4) вставляем копию во фрагмент
+fragment.appendChild(copy);
 
-// добавляем коробочку на в тег body
-document.body.appendChild(fragment);
+// 5) вставляем фрагмент в элемент с класcом map
+const map = document.querySelector('#map-canvas');
+map.appendChild(fragment);
+
+// 6) находим в элементе с классом map элемент с селектором article.popup и работаем с ним
+const article = map.querySelector('article.popup');
 
 
-const title = article.querySelector('.popup__title');
-title.textContent = data.offer.title;
+const renderTextToCard = (className, value) => {
+  const element = article.querySelector(className);
 
-const address = article.querySelector('.popup__text--address');
-address.textContent = data.offer.address;
+  if (value) {
+    element.textContent = value;
+  } else {
+    element.style.display = 'none';
+  }
+};
 
-const price = article.querySelector('.popup__text--price');
-price.textContent = data.offer.price + ' ₽/ночь';
+const renderImgToCard = (className, value) => {
+  const element = article.querySelector(className);
 
-const type = article.querySelector('.popup__type');
-type.textContent = MAP_TYPE_TO_LODGING_NAME[data.offer.type];
+  if (value) {
+    element.src = value;
+  } else {
+    element.style.display = 'none';
+  }
+};
 
-const capacity = article.querySelector('.popup__text--capacity');
-capacity.textContent = data.offer.rooms + ' комнаты для ' + data.offer.guests + ' гостей';
-
-const time = article.querySelector('.popup__text--time');
-time.textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
-
-// const features = article.querySelector('.popup__features');
-// features.textContent = FEATURES[data.offer.features];
-
-const description = article.querySelector('.popup__description');
-description.textContent = data.offer.description;
+renderTextToCard('.popup__title', data.offer.title);
+renderTextToCard('.popup__text--address', data.offer.address);
+renderTextToCard('.popup__text--price', data.offer.price + ' ₽/ночь');
+renderTextToCard('.popup__type', TYPE_TO_NAME[data.offer.type]);
+renderTextToCard('.popup__text--capacity', data.offer.rooms + ' комнаты для ' + data.offer.guests + ' гостей');
+renderTextToCard('.popup__text--time', 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout);
+renderTextToCard('.popup__description', data.offer.description);
+renderImgToCard('.popup__avatar', data.author.avatar);
 
 const features = article.querySelector('.popup__features');
-
-console.log(features);
 features.innerHTML = '';
 
-
-data.offer.features.forEach((feature) => {
+data.offer.features.forEach((feature) =>{
   const featureListItem = document.createElement('li');
   featureListItem.classList.add('popup__feature');
   featureListItem.classList.add('popup__feature--' + feature);
@@ -98,25 +71,13 @@ data.offer.features.forEach((feature) => {
 
 
 const photos = article.querySelector('.popup__photos');
-
-console.log(photos);
 photos.innerHTML = '';
 
-
-data.offer.photos.forEach((photo) => {
+data.offer.photos.forEach((photo) =>{
   const photoListItem = document.createElement('img');
   photoListItem.src = photo;
+  photoListItem.width = 45;
+  photoListItem.height = 40;
   photoListItem.classList.add('popup__photo');
   photos.appendChild(photoListItem);
 });
-
-// бежим циклом по массиву features и на на каждой итерации:
-// а) создать li
-// б) добавить этому li класс .popup__feature
-// в) добавить класс .popup__feature--{текущий элемент массива}
-
-
-// for (let i = 0; i <=  data.offer.features; i++) {
-//     const className = '.popup__feature--' + data.offer.features[i]
-// }
-
