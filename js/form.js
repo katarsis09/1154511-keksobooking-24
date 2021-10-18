@@ -8,7 +8,7 @@ const deactivateForm = () => {
   });
 
   const mapFilter = document.querySelector('.map__filters');
-  mapFilter.classList.add('ad-form--disabled');s;
+  mapFilter.classList.add('ad-form--disabled');
 };
 
 //deactivateForm();
