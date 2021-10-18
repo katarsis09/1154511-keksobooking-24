@@ -3,7 +3,7 @@ const TITLE = 'Сдам квартиру с видом на лес';
 const TYPES = [ 'palace', 'flat', 'house', 'bungalow', 'hotel'];
 const CHECKIN = ['12.00', '13.00', '14.00'];
 const CHECKOUT = ['12.00', '13.00', '14.00'];
-const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+export const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const DESCRIPTION = 'Уютная квартирка с прекрасным видом';
 const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
@@ -24,7 +24,7 @@ const locationLat = getRandomInt(LOCATION.lat.min, LOCATION.lat.max, LOCATION.ro
 const locationLng = getRandomInt(LOCATION.lng.min, LOCATION.lng.max, LOCATION.round);
 
 
-const getOffer = () => {
+export const getOffer = () => {
   return {
     author: {
       avatar: 'img/avatars/user' + addZero(getRandomInt(1, 10)) + '.png',

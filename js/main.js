@@ -1,3 +1,8 @@
-import {getOffers} from './data.js';
 
-console.log(getOffers(10));
+import { getOffer } from './data.js';
+import { renderCard } from './map.js';
+
+
+const offer = getOffer();
+renderCard(offer);
+
