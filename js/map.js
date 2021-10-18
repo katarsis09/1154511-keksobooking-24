@@ -1,7 +1,3 @@
-import { getOffer } from './data.js';
-const data = getOffer();
-
-
 const TYPE_TO_NAME = {
   'flat': 'Квартира',
   'bungalow': 'Бунгало',
@@ -29,7 +25,6 @@ map.appendChild(fragment);
 // 6) находим в элементе с классом map элемент с селектором article.popup и работаем с ним
 const article = map.querySelector('article.popup');
 
-
 const renderTextToCard = (className, value) => {
   const element = article.querySelector(className);
 
@@ -50,34 +45,40 @@ const renderImgToCard = (className, value) => {
   }
 };
 
-renderTextToCard('.popup__title', data.offer.title);
-renderTextToCard('.popup__text--address', data.offer.address);
-renderTextToCard('.popup__text--price', data.offer.price + ' ₽/ночь');
-renderTextToCard('.popup__type', TYPE_TO_NAME[data.offer.type]);
-renderTextToCard('.popup__text--capacity', data.offer.rooms + ' комнаты для ' + data.offer.guests + ' гостей');
-renderTextToCard('.popup__text--time', 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout);
-renderTextToCard('.popup__description', data.offer.description);
-renderImgToCard('.popup__avatar', data.author.avatar);
 
-const features = article.querySelector('.popup__features');
-features.innerHTML = '';
+export const renderCard = (cardData) => {
+  renderTextToCard('.popup__title', cardData.offer.title);
+  renderTextToCard('.popup__text--address', cardData.offer.address);
+  renderTextToCard('.popup__text--price', cardData.offer.price + ' ₽/ночь');
+  renderTextToCard('.popup__type', TYPE_TO_NAME[cardData.offer.type]);
+  renderTextToCard('.popup__text--capacity', cardData.offer.rooms + ' комнаты для ' + cardData.offer.guests + ' гостей');
+  renderTextToCard('.popup__text--time', 'Заезд после ' + cardData.offer.checkin + ', выезд до ' + cardData.offer.checkout);
+  renderTextToCard('.popup__description', cardData.offer.description);
+  renderImgToCard('.popup__avatar', cardData.author.avatar);
 
-data.offer.features.forEach((feature) =>{
-  const featureListItem = document.createElement('li');
-  featureListItem.classList.add('popup__feature');
-  featureListItem.classList.add('popup__feature--' + feature);
-  features.appendChild(featureListItem);
-});
+  const features = article.querySelector('.popup__features');
+  features.innerHTML = '';
+
+  cardData.offer.features.forEach((feature) =>{
+    const featureListItem = document.createElement('li');
+    featureListItem.classList.add('popup__feature');
+    featureListItem.classList.add('popup__feature--' + feature);
+    features.appendChild(featureListItem);
+  });
 
 
-const photos = article.querySelector('.popup__photos');
-photos.innerHTML = '';
+  const photos = article.querySelector('.popup__photos');
+  photos.innerHTML = '';
 
-data.offer.photos.forEach((photo) =>{
-  const photoListItem = document.createElement('img');
-  photoListItem.src = photo;
-  photoListItem.width = 45;
-  photoListItem.height = 40;
-  photoListItem.classList.add('popup__photo');
-  photos.appendChild(photoListItem);
-});
+  cardData.offer.photos.forEach((photo) =>{
+    const photoListItem = document.createElement('img');
+    photoListItem.src = photo;
+    photoListItem.width = 45;
+    photoListItem.height = 40;
+    photoListItem.classList.add('popup__photo');
+    photos.appendChild(photoListItem);
+  });
+
+};
+
+
