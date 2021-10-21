@@ -59,7 +59,7 @@ export const renderCard = (cardData) => {
   const features = article.querySelector('.popup__features');
   features.innerHTML = '';
 
-  cardData.offer.features.forEach((feature) =>{
+  cardData.offer.features.forEach((feature) => {
     const featureListItem = document.createElement('li');
     featureListItem.classList.add('popup__feature');
     featureListItem.classList.add('popup__feature--' + feature);
