@@ -72,96 +72,55 @@ const MAP_ROOMS_TO_GUESTS = {
   ],
 };
 
-
-export const validate = (e) => {
-  e.preventDefault();
-  // получить title и проверить что введенное в него значение есть и имеет длину > 30 и < 100 символов
-  const valueLenght =  titleInput.value.lenght;
-  if (valueLenght > MIN_TITLE_LENGTH && valueLenght < MAX_TITLE_LENGTH) {
-    console.log('форма готова для отправки');
-  } else {
-    console.log('форма не готова для отправки');
-  }
-
-  // получить PRICE_RANGE_BY_TYPE[type.value] (min, max)
-  // получить "цена за ночь" введенное значение и проверить что цена введена, это число, и что оно > min и < max
-
-
-  // если все ок, то вызываем form.submit()
-  // если валидация не проходит return false
-};
-
-
-form.addEventListener('submit', validate);
-type.addEventListener('change', (evt) => {
-  const value = evt.target.value;
-  const range = PRICE_RANGE_BY_TYPE[value];
-  priceInput.min = range.min;
-  priceInput.max = range.max;
-  priceInput.placeholder = range.min;
-});
-roomsNumber.addEventListener('change', (evt) => {
-  const value = evt.target.value;
-  const options = MAP_ROOMS_TO_GUESTS[value];
+const setOptionsForGuestsCount = (rooms) => {
+  const options = MAP_ROOMS_TO_GUESTS[rooms];
   guestsNumber.innerHTML = '';
 
   options.forEach((option) => {
-    // создать тег option
     const optionElement = document.createElement('option');
-    // установить для этого option атрибут value и атрибут textContent
     optionElement.value = option.value;
     optionElement.textContent = option.text;
-    // добавить в guestsNumber
     guestsNumber.appendChild(optionElement);
   });
+};
 
 
-});
+const validate = (e) => {
+  e.preventDefault();
+  // получить title и проверить что введенное в него значение есть и имеет длину > 30 и < 100 символов
+  const valueLength =  titleInput.value.length;
+  if (valueLength < MIN_TITLE_LENGTH && valueLength > MAX_TITLE_LENGTH) {
+    return false;
+  }
+
+  // получить PRICE_RANGE_BY_TYPE[type.value] (min, max)
+  const range = PRICE_RANGE_BY_TYPE[type.value];
+
+  // получить "цена за ночь" введенное значение и проверить что цена введена, это число, и что оно > min и < max
+  if (typeof priceInput.value !== 'number' || priceInput.value < range.min || priceInput.value > range.max) {
+    return false;
+  }
+
+  // если все ок, то вызываем form.submit()
+  form.submit();
+};
 
 
-/////////////////////////////////////////////
+export const init = () => {
+  setOptionsForGuestsCount(roomsNumber.value);
 
-// const user = {};
-// user.name = 'John';
-// user.surname = 'Smith';
-// user.name = 'Pete';
-// delete user.name;
+  roomsNumber.addEventListener('change', (evt) => {
+    setOptionsForGuestsCount(evt.target.value);
+  });
 
-// console.log(user);
+  form.addEventListener('submit', validate);
 
+  type.addEventListener('change', (evt) => {
+    const value = evt.target.value;
+    const range = PRICE_RANGE_BY_TYPE[value];
+    priceInput.min = range.min;
+    priceInput.max = range.max;
+    priceInput.placeholder = range.min;
+  });
+};
 
-// const user = {
-//   name: 'John',
-// };
-
-// user.name = 'Pete';
-// console.log(user);
-
-
-// const salaries = {
-//   John: 100,
-//   Ann: 160,
-//   Pete: 130,
-// };
-
-// let sum = 0;
-// for (const key in salaries) {
-//   sum += salaries[key];
-// }
-
-// console.log(sum);
-
-// const menu = {
-//   width: 200,
-//   height: 300,
-//   title: 'My menu',
-// };
-
-// function multiplyNumeric(obj) {
-//   for (const key in obj) {
-//     obj[key] *=2;
-//   }
-// }
-
-// multiplyNumeric(menu);
-// console.log(menu);

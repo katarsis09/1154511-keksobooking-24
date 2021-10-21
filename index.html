@@ -28,7 +28,7 @@
 
         <!-- Фильтрация объявлений -->
         <div class="map__filters-container">
-          <form class="map__filters" method="post" action="https://24.javascript.pages.academy/keksobooking" autocomplete="off">
+          <form class="map__filters" autocomplete="off">
             <select name="housing-type" id="housing-type" class="map__filter">
               <option value="any" selected>Любой тип жилья</option>
               <option value="bungalow">Бунгало</option>
@@ -141,6 +141,7 @@
         <form
           class="ad-form"
           method="post"
+          action="https://24.javascript.pages.academy/keksobooking"
           enctype="multipart/form-data"
           autocomplete="off"
         >
@@ -473,6 +474,5 @@
       </div>
     </template>
     <script type="module" src="./js/main.js"></script>
-    <script type="module" src="./js/validate-form.js"></script>
   </body>
 </html>
