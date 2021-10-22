@@ -7,6 +7,9 @@ const priceInput = document.querySelector('#price');
 const type = document.querySelector('#type');
 const guestsNumber = document.querySelector('#capacity');
 const roomsNumber = document.querySelector('#room_number');
+const timeIn = document.querySelector('#timein');
+const timeOut = document.querySelector('#timeout');
+
 const PRICE_RANGE_BY_TYPE = {
   flat: {
     min: 1000,
@@ -108,6 +111,16 @@ const validate = (e) => {
 
 export const init = () => {
   setOptionsForGuestsCount(roomsNumber.value);
+
+  timeIn.addEventListener('change', (evt) => {
+    const value = evt.target.value;
+    timeOut.value = value;
+  }),
+
+  timeOut.addEventListener('change', (evt) => {
+    const value = evt.target.value;
+    timeIn.value = value;
+  }),
 
   roomsNumber.addEventListener('change', (evt) => {
     setOptionsForGuestsCount(evt.target.value);
