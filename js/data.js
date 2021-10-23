@@ -20,11 +20,10 @@ const LOCATION = {
   round: 5,
 };
 
-const locationLat = getRandomInt(LOCATION.lat.min, LOCATION.lat.max, LOCATION.round);
-const locationLng = getRandomInt(LOCATION.lng.min, LOCATION.lng.max, LOCATION.round);
-
 
 export const getOffer = () => {
+  const locationLat = getRandomInt(LOCATION.lat.min, LOCATION.lat.max, LOCATION.round);
+  const locationLng = getRandomInt(LOCATION.lng.min, LOCATION.lng.max, LOCATION.round);
   return {
     author: {
       avatar: 'img/avatars/user' + addZero(getRandomInt(1, 10)) + '.png',
