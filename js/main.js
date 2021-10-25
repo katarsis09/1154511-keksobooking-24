@@ -1,13 +1,11 @@
 
-// import { getOffer } from './data.js';
-// import { renderCard } from './map.js';
+import { getOffers } from './data.js';
 import { deactivateForm, activateForm } from './form.js';
 import { init } from './validate-form.js';
-import { initMap } from './map.js';
+import { initMap, renderPins } from './map.js';
 
 
-//const offer = getOffer();
-//renderCard(offer);
+const offers = getOffers(10);
 
 
 deactivateForm();
@@ -16,3 +14,4 @@ activateForm();
 
 
 init();
+renderPins(offers);

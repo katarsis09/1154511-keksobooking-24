@@ -1,5 +1,3 @@
-import { getOffers } from './data.js';
-
 const TYPE_TO_NAME = {
   'flat': 'Квартира',
   'bungalow': 'Бунгало',
@@ -8,25 +6,7 @@ const TYPE_TO_NAME = {
   'hotel': 'Отель',
 };
 
-// 1) находим template, берем его контент .content
-const card = document.querySelector('#card').content;
-
-// 2) делаем копию элемента из пункта 1
-const copy = card.cloneNode(true);
-
-// 3) создаем фрагмент
-const fragment = document.createDocumentFragment();
-
-// 4) вставляем копию во фрагмент
-fragment.appendChild(copy);
-
-// 5) вставляем фрагмент в элемент с класcом map
-// const map = document.querySelector('#map-canvas');
-// map.appendChild(fragment);
-
-// 6) находим в элементе с классом map элемент с селектором article.popup и работаем с ним
-// const article = fragment.querySelector('article.popup');
-
+const address = document.querySelector('#address');
 
 const renderTextToCard = (className, value, el) => {
   const element = el.querySelector(className);
@@ -49,7 +29,7 @@ const renderImgToCard = (className, value, el) => {
 };
 
 
-const getFilledCard = (cardData, el) => {
+export const getFilledCard = (cardData, el) => {
   renderTextToCard('.popup__title', cardData.offer.title, el);
   renderTextToCard('.popup__text--address', cardData.offer.address, el);
   renderTextToCard('.popup__text--price', cardData.offer.price + ' ₽/ночь', el);
@@ -135,31 +115,37 @@ const mainPinMarker = L.marker(
 mainPinMarker.addTo(myMap);
 
 mainPinMarker.on('moveend', (evt) => {
-  console.log(evt.target.getLatLng());
+  const regExp = /\(([^)]+)\)/;
+  const value = regExp.exec(evt.target.getLatLng());
+  address.value = value[1];
+
 });
 
-const offers = getOffers(10);
+
+export const renderPins = (offers) => {
+
+  offers.forEach((offer) => {
+    const icon = L.icon({
+      iconUrl: '../img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
 
 
-offers.forEach((offer) => {
-  const icon = L.icon({
-    iconUrl: '../img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    const marker = L.marker(
+      {
+        lat: offer.offer.location.lat,
+        lng: offer.offer.location.lng,
+      },
+      {
+        icon,
+      },
+    );
+    marker
+      .addTo(myMap)
+      .bindPopup(createOfferCard(offer));
+
   });
+};
 
 
-  const marker = L.marker(
-    {
-      lat: offer.offer.location.lat,
-      lng: offer.offer.location.lng,
-    },
-    {
-      icon,
-    },
-  );
-  marker
-    .addTo(myMap)
-    .bindPopup(createOfferCard(offer));
-
-});
