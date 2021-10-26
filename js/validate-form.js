@@ -109,7 +109,7 @@ const validate = (e) => {
 };
 
 
-export const init = () => {
+export const initForm = () => {
   setOptionsForGuestsCount(roomsNumber.value);
 
   timeIn.addEventListener('change', (evt) => {

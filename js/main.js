@@ -1,11 +1,16 @@
 
-import { getOffer } from './data.js';
-import { renderCard } from './map.js';
-import { activateForm } from './form.js';
-import { init } from './validate-form.js';
+import { getOffers } from './data.js';
+import { deactivateForm } from './form.js';
+import { initForm } from './validate-form.js';
+import { initMap, renderPins } from './map.js';
 
 
-const offer = getOffer();
-renderCard(offer);
-activateForm();
-init();
+const offers = getOffers(10);
+
+
+deactivateForm();
+initMap();
+
+
+initForm();
+renderPins(offers);
