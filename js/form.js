@@ -27,5 +27,4 @@ const activateForm = () => {
   mapFilter.classList.remove('ad-form--disabled');
 };
 
-activateForm();
 export { activateForm, deactivateForm };
