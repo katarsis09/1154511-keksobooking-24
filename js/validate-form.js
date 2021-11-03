@@ -1,3 +1,8 @@
+import { sendData } from './api.js';
+import { showModal } from './modal.js';
+import { initMap } from './map.js';
+
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
@@ -9,6 +14,14 @@ const guestsNumber = document.querySelector('#capacity');
 const roomsNumber = document.querySelector('#room_number');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
+const buttonReset = document.querySelector('.ad-form__reset');
+const formFilters = document.querySelector('.map__filters');
+const address = document.querySelector('#address');
+const MAIN_PIN_INIT_LOCATION = {
+  lat: 35.6895,
+  lng: 139.692,
+};
+
 
 const PRICE_RANGE_BY_TYPE = {
   flat: {
@@ -87,12 +100,42 @@ const setOptionsForGuestsCount = (rooms) => {
   });
 };
 
+// функция сброса формы
+
+export const resetApp = () => {
+  form.reset();
+  formFilters.reset();
+  address.value = `${MAIN_PIN_INIT_LOCATION.lat}, ${MAIN_PIN_INIT_LOCATION.lng}`;
+};
+
+// обработчик события для кнопки очистить
+
+buttonReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  form.reset();
+  formFilters.reset();
+  address.value = `${MAIN_PIN_INIT_LOCATION.lat}, ${MAIN_PIN_INIT_LOCATION.lng}`;
+});
+
+// успешное добавление объявления
+const onSuccessOfferSubmit = () => {
+  showModal('Объявление успешно добавлено', true);
+  resetApp();
+};
+
+// ошибка при добавлении объявления
+const onErrorOfferSubmit = (e) => {
+  console.error(e);
+  showModal('Объявление не добавлено', false);
+};
+
 
 const validate = (e) => {
   e.preventDefault();
   // получить title и проверить что введенное в него значение есть и имеет длину > 30 и < 100 символов
   const valueLength =  titleInput.value.length;
   if (valueLength < MIN_TITLE_LENGTH && valueLength > MAX_TITLE_LENGTH) {
+    console.log('не прошла валидация1');
     return false;
   }
 
@@ -100,12 +143,12 @@ const validate = (e) => {
   const range = PRICE_RANGE_BY_TYPE[type.value];
 
   // получить "цена за ночь" введенное значение и проверить что цена введена, это число, и что оно > min и < max
-  if (typeof priceInput.value !== 'number' || priceInput.value < range.min || priceInput.value > range.max) {
+  if (isNaN(parseFloat(priceInput.value)) || priceInput.value < range.min || priceInput.value > range.max) {
     return false;
   }
 
   // если все ок, то вызываем form.submit()
-  form.submit();
+  sendData(onSuccessOfferSubmit,onErrorOfferSubmit,new FormData(e.target));
 };
 
 
@@ -136,4 +179,5 @@ export const initForm = () => {
     priceInput.placeholder = range.min;
   });
 };
+
 

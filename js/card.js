@@ -41,25 +41,30 @@ export const fillCard = (cardData, el) => {
   const features = el.querySelector('.popup__features');
   features.innerHTML = '';
 
-  cardData.offer.features.forEach((feature) => {
-    const featureListItem = document.createElement('li');
-    featureListItem.classList.add('popup__feature');
-    featureListItem.classList.add('popup__feature--' + feature);
-    features.appendChild(featureListItem);
-  });
+  if (cardData.offer.features) {
+    cardData.offer.features.forEach((feature) => {
+      const featureListItem = document.createElement('li');
+      featureListItem.classList.add('popup__feature');
+      featureListItem.classList.add('popup__feature--' + feature);
+      features.appendChild(featureListItem);
+    });
+  }
 
 
   const photos = el.querySelector('.popup__photos');
   photos.innerHTML = '';
 
-  cardData.offer.photos.forEach((photo) =>{
-    const photoListItem = document.createElement('img');
-    photoListItem.src = photo;
-    photoListItem.width = 45;
-    photoListItem.height = 40;
-    photoListItem.classList.add('popup__photo');
-    photos.appendChild(photoListItem);
-  });
+  if (cardData.offer.photos) {
+    cardData.offer.photos.forEach((photo) =>{
+      const photoListItem = document.createElement('img');
+      photoListItem.src = photo;
+      photoListItem.width = 45;
+      photoListItem.height = 40;
+      photoListItem.classList.add('popup__photo');
+      photos.appendChild(photoListItem);
+    });
+  }
+
 
   return el;
 

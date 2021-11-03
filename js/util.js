@@ -40,3 +40,13 @@ export const addZero = (num) => {
 };
 
 
+// функция получения попапа успешной отправки данных
+
+
+const getSuccess = () => {
+  const templateSuccess = document.querySelector('#success').content.querySelector('.success');
+  const success = templateSuccess.cloneNode(true);
+};
+
+
+export { getSuccess };
