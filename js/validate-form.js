@@ -1,6 +1,5 @@
 import { sendData } from './api.js';
 import { showModal } from './modal.js';
-import { initMap } from './map.js';
 
 
 const MIN_TITLE_LENGTH = 30;
