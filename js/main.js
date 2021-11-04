@@ -12,13 +12,12 @@ import { showModal } from './modal.js';
 // успешная загрузка объявлений
 const onSuccessOffersLoaded = (data) => {
   renderPins(data);
-  showModal('Данные успешно загружены', true);
 };
 
 // ошибка при загрузке объявлений
 const onErrorOffersLoaded = (e) => {
   console.error(e);
-  showModal('Ошибка при загрузке объявлений', false, getData.bind(onSuccessOffersLoaded, onErrorOffersLoaded));
+  showModal('', false);
 };
 
 
