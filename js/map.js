@@ -68,8 +68,8 @@ export const renderPins = (offers) => {
 
     const marker = L.marker(
       {
-        lat: offer.offer.location.lat,
-        lng: offer.offer.location.lng,
+        lat: offer.location.lat,
+        lng: offer.location.lng,
       },
       {
         icon,
