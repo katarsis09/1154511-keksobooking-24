@@ -7,8 +7,8 @@ const typeSelect = document.querySelector('#housing-type');
 
 // const mapFilters = document.querySelectorAll('.map__filter');
 // const mapCheckboxFilters = document.querySelectorAll('.map__checkbox');
-// const rooms = document.querySelector('#housing-rooms');
-// const guests = document.querySelector('#housing-guests');
+const roomsSelect = document.querySelector('#housing-rooms');
+const guestsSelect = document.querySelector('#housing-guests');
 const priceSelect = document.querySelector('#housing-price');
 // const dishwasher = document.querySelector('#filter-dishwasher');
 // const parking = document.querySelector('#filter-parking');
@@ -18,9 +18,18 @@ const priceSelect = document.querySelector('#housing-price');
 // const wifi = document.querySelector('#filter-wifi');
 
 const PRICE_RANGES = {
-  low: [0, 10000],
-  middle: [10000, 50000],
-  high: [50000, 1000000],
+  low: {
+    min: 0,
+    max: 10000,
+  },
+  middle: {
+    min: 10000,
+    max: 50000,
+  },
+  high: {
+    min: 50000,
+    max: 1000000,
+  },
 };
 
 
@@ -63,20 +72,52 @@ const filterByPrice = (list, priceRanges) => {
   //берем первый элемент
 
   const filtered = list.filter((item) => {
-    debugger;
     if (!PRICE_RANGES[priceRanges]) {
       return true;
     }
+    const value = evt.target.value;
+    const range = PRICE_RANGES[value];
+    const min = range.min;
+    const max = range.max;
     // получи min max, запиши их в переменные
     // верни элементы у которых item.offer.price > min && item.offer.price < max
-    return item.offer.price === priceRanges;
+    return item.offer.price > min && item.offer.price < max;
   });
 
   return filtered;
 };
 
-
 priceSelect.addEventListener('change', (evt) => {
   const filteredByPrice = filterByPrice(offers, evt.target.value);
   renderPins(filteredByPrice);
+});
+
+
+const filterByRooms = (list, rooms) => {
+
+  const filtered = list.filter((item) => {
+    return item.offer.rooms === rooms;
+  });
+
+  return filtered;
+};
+
+roomsSelect.addEventListener('change', (evt) => {
+  const filteredByRooms = filterByRooms(offers, evt.target.value);
+  renderPins(filteredByRooms);
+});
+
+
+const filterByGuests = (list, guests) => {
+
+  const filtered = list.filter((item) => {
+    return item.offer.guests === guests;
+  });
+
+  return filtered;
+};
+
+guestsSelect.addEventListener('change', (evt) => {
+  const filteredByGuests = filterByGuests(offers, evt.target.value);
+  renderPins(filteredByGuests);
 });
