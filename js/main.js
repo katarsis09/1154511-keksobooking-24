@@ -6,13 +6,17 @@ import { initMap, renderPins } from './map.js';
 import { getData } from './api.js';
 import { showModal } from './modal.js';
 
-
+const ELEMENTS_QUANTITY = 10;
 // const offers = getOffers(10);
 
+
+let offers = [];
 // успешная загрузка объявлений
-const onSuccessOffersLoaded = (data) => {
-  renderPins(data);
+export const onSuccessOffersLoaded = (data) => {
+  renderPins(data.slice(0, ELEMENTS_QUANTITY));
+  offers = data;
 };
+
 
 // ошибка при загрузке объявлений
 const onErrorOffersLoaded = (e) => {
@@ -20,13 +24,12 @@ const onErrorOffersLoaded = (e) => {
   showModal('', false);
 };
 
-
 getData(onSuccessOffersLoaded, onErrorOffersLoaded);
 
 
 deactivateForm();
 initMap();
-
-
 initForm();
+
+export { offers };
 
