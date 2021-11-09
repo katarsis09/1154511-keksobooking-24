@@ -13,8 +13,6 @@ address.value = `${MAIN_PIN_INIT_LOCATION.lat}, ${MAIN_PIN_INIT_LOCATION.lng}`;
 
 const myMap = L.map('map-canvas');
 
-const markersGroup = L.layerGroup().addTo(myMap);
-
 export const initMap = () => {
   myMap.on('load', () => {
     console.log('Карта инициализирована');

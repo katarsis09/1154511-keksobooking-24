@@ -1,21 +1,14 @@
-
 import { offers } from './main.js';
 import { renderPins } from './map.js';
+import { debounce } from './utils/debounce.js';
 
 
+const ELEMENTS_QUANTITY = 10;
+const DEFAULT_VALUE = 'any';
 const typeSelect = document.querySelector('#housing-type');
-
-// const mapFilters = document.querySelectorAll('.map__filter');
-// const mapCheckboxFilters = document.querySelectorAll('.map__checkbox');
 const roomsSelect = document.querySelector('#housing-rooms');
 const guestsSelect = document.querySelector('#housing-guests');
 const priceSelect = document.querySelector('#housing-price');
-// const dishwasher = document.querySelector('#filter-dishwasher');
-// const parking = document.querySelector('#filter-parking');
-// const washer = document.querySelector('#filter-washer');
-// const elevator = document.querySelector('#filter-elevator');
-// const conditioner = document.querySelector('#filter-conditioner');
-// const wifi = document.querySelector('#filter-wifi');
 
 const PRICE_RANGES = {
   low: {
@@ -33,91 +26,118 @@ const PRICE_RANGES = {
 };
 
 
-// //  const ELEMENTS_QUANTITY = 10;
-// const ANY_RANGE = 'any';
-
-// const filterSimilarOffers = (offers) => {
-
-//   const filteredOffers = onSuccessOffersLoaded()
-//     .filter((data) => {
-//       if (selectedHousingType && selectedHousingType !== ANY_RANGE) {
-//         return data.offer.type === selectedHousingType;
-//       }
-//       return true;
-//     });
-// };
-
-
-const filterByType = (list, type) => {
-  //берем первый элемент
-
+const filterByType = (list) => {
+  const type = typeSelect.value;
+  if (type === DEFAULT_VALUE) {
+    return list;
+  }
   const filtered = list.filter((item) => {
     return item.offer.type === type;
   });
-
   return filtered;
 };
 
-typeSelect.addEventListener('change', (evt) => {
-  const filteredByType = filterByType(offers, evt.target.value);
-  renderPins(filteredByType);
-});
 
+const filterByPrice = (list) => {
 
-// 1) при выборе типа жилья
-// 2) вызываешь renderPin и передаешь туда отфильтрованные по типу жилья офферы
+  const price = priceSelect.value;
 
-
-const filterByPrice = (list, priceRanges) => {
-  //берем первый элемент
+  if (price === DEFAULT_VALUE) {
+    return list;
+  }
 
   const filtered = list.filter((item) => {
-    if (!PRICE_RANGES[priceRanges]) {
-      return true;
-    }
-    const value = evt.target.value;
-    const range = PRICE_RANGES[value];
+    const range = PRICE_RANGES[price];
     const min = range.min;
     const max = range.max;
-    // получи min max, запиши их в переменные
-    // верни элементы у которых item.offer.price > min && item.offer.price < max
+
     return item.offer.price > min && item.offer.price < max;
   });
 
   return filtered;
 };
 
-priceSelect.addEventListener('change', (evt) => {
-  const filteredByPrice = filterByPrice(offers, evt.target.value);
-  renderPins(filteredByPrice);
-});
 
-
-const filterByRooms = (list, rooms) => {
-
+const filterByRooms = (list) => {
+  const rooms = roomsSelect.value;
+  if (rooms === DEFAULT_VALUE) {
+    return list;
+  }
   const filtered = list.filter((item) => {
-    return item.offer.rooms === rooms;
+    return item.offer.rooms === Number(rooms);
   });
 
   return filtered;
 };
 
-roomsSelect.addEventListener('change', (evt) => {
-  const filteredByRooms = filterByRooms(offers, evt.target.value);
-  renderPins(filteredByRooms);
-});
 
-
-const filterByGuests = (list, guests) => {
-
+const filterByGuests = (list) => {
+  const guests = guestsSelect.value;
+  if (guests === DEFAULT_VALUE) {
+    return list;
+  }
   const filtered = list.filter((item) => {
-    return item.offer.guests === guests;
+
+    return item.offer.guests === Number(guests);
   });
 
   return filtered;
 };
 
-guestsSelect.addEventListener('change', (evt) => {
-  const filteredByGuests = filterByGuests(offers, evt.target.value);
-  renderPins(filteredByGuests);
-});
+
+const filterOffersByFeatures = (list) => {
+  const pceudoFeatures = document.querySelectorAll('input[name="features"]:checked');
+  const arrayOfFeatures = Array.from(pceudoFeatures);
+  const mapped = arrayOfFeatures.map((el) => {
+    return el.value;
+  });
+
+  const filtered = list.filter((offer) => {
+    return mapped.every((el) => offer.offer.features && offer.offer.features.includes(el));
+  });
+  return filtered;
+};
+
+
+const filteredFunction = [filterByType, filterByPrice, filterOffersByFeatures, filterByGuests, filterByRooms];
+
+const filterOffers = (list) => {
+  const filtered = filteredFunction.reduce((acc, curr) => {
+
+    const filter = curr(acc);
+    return filter;
+  }, list);
+  renderPins(filtered.slice(0, ELEMENTS_QUANTITY));
+};
+
+
+const debounceFilterOffers = debounce(filterOffers);
+
+
+export const initFilters = () => {
+  const features = document.querySelectorAll('input[name="features"]');
+  features.forEach((item) => {
+    item.addEventListener('change', () => {
+      debounceFilterOffers(offers);
+    });
+  });
+
+  guestsSelect.addEventListener('change', () => {
+    debounceFilterOffers(offers);
+  });
+
+  roomsSelect.addEventListener('change', () => {
+    debounceFilterOffers(offers);
+  });
+
+
+  priceSelect.addEventListener('change', () => {
+    debounceFilterOffers(offers);
+  });
+
+  typeSelect.addEventListener('change', () => {
+    debounceFilterOffers(offers);
+  });
+
+};
+
