@@ -56,7 +56,12 @@ mainPinMarker.on('move', (evt) => {
 });
 
 
+const markerGroup = L.layerGroup().addTo(myMap);
+
+
 export const renderPins = (offers) => {
+
+  markerGroup.clearLayers();
 
   offers.forEach((offer) => {
     const icon = L.icon({
@@ -75,11 +80,11 @@ export const renderPins = (offers) => {
         icon,
       },
     );
+
     marker
-      .addTo(myMap)
+      .addTo(markerGroup)
       .bindPopup(createOfferCard(offer));
-
   });
+
+
 };
-
-
