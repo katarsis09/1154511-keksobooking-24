@@ -9,6 +9,7 @@ const typeSelect = document.querySelector('#housing-type');
 const roomsSelect = document.querySelector('#housing-rooms');
 const guestsSelect = document.querySelector('#housing-guests');
 const priceSelect = document.querySelector('#housing-price');
+const filterSelect = document.querySelector('.map__filters');
 
 const PRICE_RANGES = {
   low: {
@@ -115,29 +116,8 @@ const debounceFilterOffers = debounce(filterOffers);
 
 
 export const initFilters = () => {
-  const features = document.querySelectorAll('input[name="features"]');
-  features.forEach((item) => {
-    item.addEventListener('change', () => {
-      debounceFilterOffers(offers);
-    });
-  });
 
-  guestsSelect.addEventListener('change', () => {
+  filterSelect.addEventListener('change', () => {
     debounceFilterOffers(offers);
   });
-
-  roomsSelect.addEventListener('change', () => {
-    debounceFilterOffers(offers);
-  });
-
-
-  priceSelect.addEventListener('change', () => {
-    debounceFilterOffers(offers);
-  });
-
-  typeSelect.addEventListener('change', () => {
-    debounceFilterOffers(offers);
-  });
-
 };
-
