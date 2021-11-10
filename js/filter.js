@@ -27,87 +27,54 @@ const PRICE_RANGES = {
 };
 
 
-const filterByType = (list) => {
-  const type = typeSelect.value;
-  if (type === DEFAULT_VALUE) {
-    return list;
+const filterByType = (offer) => {
+  if (typeSelect.value === DEFAULT_VALUE) {
+    return true;
   }
-  const filtered = list.filter((item) => {
-    return item.offer.type === type;
-  });
-  return filtered;
+  return offer.offer.type === typeSelect.value;
 };
 
 
-const filterByPrice = (list) => {
+const filterByPrice = (offer) => {
 
-  const price = priceSelect.value;
-
-  if (price === DEFAULT_VALUE) {
-    return list;
+  if (priceSelect.value === DEFAULT_VALUE) {
+    return true;
   }
 
-  const filtered = list.filter((item) => {
-    const range = PRICE_RANGES[price];
-    const min = range.min;
-    const max = range.max;
-
-    return item.offer.price > min && item.offer.price < max;
-  });
-
-  return filtered;
+  const range = PRICE_RANGES[priceSelect.value];
+  return offer.offer.price >= range.min && offer.offer.price <= range.max;
 };
 
 
-const filterByRooms = (list) => {
-  const rooms = roomsSelect.value;
-  if (rooms === DEFAULT_VALUE) {
-    return list;
+const filterByRooms = (offer) => {
+  if (roomsSelect.value === DEFAULT_VALUE) {
+    return true;
   }
-  const filtered = list.filter((item) => {
-    return item.offer.rooms === Number(rooms);
-  });
-
-  return filtered;
+  return offer.offer.rooms === Number(roomsSelect.value);
 };
 
 
-const filterByGuests = (list) => {
-  const guests = guestsSelect.value;
-  if (guests === DEFAULT_VALUE) {
-    return list;
+const filterByGuests = (offer) => {
+  if (guestsSelect.value === DEFAULT_VALUE) {
+    return true;
   }
-  const filtered = list.filter((item) => {
-
-    return item.offer.guests === Number(guests);
-  });
-
-  return filtered;
+  return offer.offer.guests === Number(guestsSelect.value);
 };
 
 
-const filterOffersByFeatures = (list) => {
+const filterOffersByFeatures = (offer) => {
   const pceudoFeatures = document.querySelectorAll('input[name="features"]:checked');
   const arrayOfFeatures = Array.from(pceudoFeatures);
-  const mapped = arrayOfFeatures.map((el) => {
-    return el.value;
-  });
-
-  const filtered = list.filter((offer) => {
-    return mapped.every((el) => offer.offer.features && offer.offer.features.includes(el));
-  });
-  return filtered;
+  const mapped = arrayOfFeatures.map((el) => el.value);
+  return mapped.every((el) => offer.offer.features && offer.offer.features.includes(el));
 };
 
 
 const filteredFunction = [filterByType, filterByPrice, filterOffersByFeatures, filterByGuests, filterByRooms];
 
-const filterOffers = (list) => {
-  const filtered = filteredFunction.reduce((acc, curr) => {
 
-    const filter = curr(acc);
-    return filter;
-  }, list);
+const filterOffers = (list) => {
+  const filtered = list.filter((offer) => filteredFunction.every((func) => func(offer)));
   renderPins(filtered.slice(0, ELEMENTS_QUANTITY));
 };
 
