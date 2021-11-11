@@ -1,5 +1,3 @@
-
-
 const TYPE_TO_NAME = {
   'flat': 'Квартира',
   'bungalow': 'Бунгало',
@@ -8,8 +6,8 @@ const TYPE_TO_NAME = {
   'hotel': 'Отель',
 };
 
-export const renderTextToCard = (className, value, el) => {
-  const element = el.querySelector(className);
+export const renderTextToCard = (className, value, item) => {
+  const element = item.querySelector(className);
 
   if (value) {
     element.textContent = value;
@@ -18,8 +16,8 @@ export const renderTextToCard = (className, value, el) => {
   }
 };
 
-export const renderImgToCard = (className, value, el) => {
-  const element = el.querySelector(className);
+export const renderImgToCard = (className, value, item) => {
+  const element = item.querySelector(className);
 
   if (value) {
     element.src = value;
@@ -28,17 +26,17 @@ export const renderImgToCard = (className, value, el) => {
   }
 };
 
-export const fillCard = (cardData, el) => {
-  renderTextToCard('.popup__title', cardData.offer.title, el);
-  renderTextToCard('.popup__text--address', cardData.offer.address, el);
-  renderTextToCard('.popup__text--price', cardData.offer.price + ' ₽/ночь', el);
-  renderTextToCard('.popup__type', TYPE_TO_NAME[cardData.offer.type], el);
-  renderTextToCard('.popup__text--capacity', cardData.offer.rooms + ' комнаты для ' + cardData.offer.guests + ' гостей', el);
-  renderTextToCard('.popup__text--time', 'Заезд после ' + cardData.offer.checkin + ', выезд до ' + cardData.offer.checkout, el);
-  renderTextToCard('.popup__description', cardData.offer.description, el);
-  renderImgToCard('.popup__avatar', cardData.author.avatar, el);
+export const fillCard = (cardData, item) => {
+  renderTextToCard('.popup__title', cardData.offer.title, item);
+  renderTextToCard('.popup__text--address', cardData.offer.address, item);
+  renderTextToCard('.popup__text--price', cardData.offer.price + ' ₽/ночь', item);
+  renderTextToCard('.popup__type', TYPE_TO_NAME[cardData.offer.type], item);
+  renderTextToCard('.popup__text--capacity', cardData.offer.rooms + ' комнаты для ' + cardData.offer.guests + ' гостей', item);
+  renderTextToCard('.popup__text--time', 'Заезд после ' + cardData.offer.checkin + ', выезд до ' + cardData.offer.checkout, item);
+  renderTextToCard('.popup__description', cardData.offer.description, item);
+  renderImgToCard('.popup__avatar', cardData.author.avatar, item);
 
-  const features = el.querySelector('.popup__features');
+  const features = item.querySelector('.popup__features');
   features.innerHTML = '';
 
   if (cardData.offer.features) {
@@ -51,7 +49,7 @@ export const fillCard = (cardData, el) => {
   }
 
 
-  const photos = el.querySelector('.popup__photos');
+  const photos = item.querySelector('.popup__photos');
   photos.innerHTML = '';
 
   if (cardData.offer.photos) {
@@ -66,7 +64,7 @@ export const fillCard = (cardData, el) => {
   }
 
 
-  return el;
+  return item;
 
 
 };

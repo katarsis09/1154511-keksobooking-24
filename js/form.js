@@ -11,8 +11,6 @@ const deactivateForm = () => {
   mapFilter.classList.add('ad-form--disabled');
 };
 
-//deactivateForm();
-
 
 const activateForm = () => {
   const form = document.querySelector('.ad-form');

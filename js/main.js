@@ -1,4 +1,3 @@
-// import { getOffers } from './data.js';
 import { deactivateForm } from './form.js';
 import { initForm } from './validate-form.js';
 import { initMap, renderPins } from './map.js';
@@ -17,8 +16,8 @@ export const onSuccessOffersLoaded = (data) => {
 
 
 // ошибка при загрузке объявлений
-const onErrorOffersLoaded = (e) => {
-  console.error(e);
+const onErrorOffersLoaded = (error) => {
+  console.error(error);
   showModal('', false);
 };
 

@@ -6,9 +6,9 @@ const getData = (onSuccess, onError) => {
     .then((offers) => {
       onSuccess(offers);
     })
-    .catch((e) => {
-      console.log(e);
-      onError(e);
+    .catch((error) => {
+      console.log(error);
+      onError(error);
     });
 };
 
@@ -29,9 +29,9 @@ const sendData = (onSuccess, onError, body) => {
         onError();
       }
     })
-    .catch((e) => {
-      console.log(e);
-      onError(e);
+    .catch((error) => {
+      console.log(error);
+      onError(error);
     });
 };
 

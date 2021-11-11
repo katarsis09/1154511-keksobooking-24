@@ -26,7 +26,7 @@ document.addEventListener('keydown', (evt) => {
 });
 
 
-const showModal = (text, success/*, callback*/) => {
+const showModal = (text, success) => {
 
   if (success) {
     const successMessage = successCopy.querySelector('.success__message');
@@ -42,12 +42,10 @@ const showModal = (text, success/*, callback*/) => {
       errorMessage.textContent = text;
     }
     error.style.display = 'block';
-    //const errorButton = error.querySelector('.error__button');
     successCopy.style.display = 'none';
 
     document.addEventListener('click', () => {
       error.style.display = 'none';
-      //callback();
     });
 
     document.addEventListener('keydown', (evt) => {

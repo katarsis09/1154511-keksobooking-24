@@ -4,23 +4,10 @@ import { showModal } from './modal.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-
-const form = document.querySelector('.ad-form');
-const titleInput = document.querySelector('#title');
-const priceInput = document.querySelector('#price');
-const type = document.querySelector('#type');
-const guestsNumber = document.querySelector('#capacity');
-const roomsNumber = document.querySelector('#room_number');
-const timeIn = document.querySelector('#timein');
-const timeOut = document.querySelector('#timeout');
-const buttonReset = document.querySelector('.ad-form__reset');
-const formFilters = document.querySelector('.map__filters');
-const address = document.querySelector('#address');
 const MAIN_PIN_INIT_LOCATION = {
   lat: 35.6895,
   lng: 139.692,
 };
-
 
 const PRICE_RANGE_BY_TYPE = {
   flat: {
@@ -87,6 +74,19 @@ const MAP_ROOMS_TO_GUESTS = {
   ],
 };
 
+const form = document.querySelector('.ad-form');
+const titleInput = document.querySelector('#title');
+const priceInput = document.querySelector('#price');
+const type = document.querySelector('#type');
+const guestsNumber = document.querySelector('#capacity');
+const roomsNumber = document.querySelector('#room_number');
+const timeIn = document.querySelector('#timein');
+const timeOut = document.querySelector('#timeout');
+const buttonReset = document.querySelector('.ad-form__reset');
+const formFilters = document.querySelector('.map__filters');
+const address = document.querySelector('#address');
+
+
 const setOptionsForGuestsCount = (rooms) => {
   const options = MAP_ROOMS_TO_GUESTS[rooms];
   guestsNumber.innerHTML = '';
@@ -123,26 +123,34 @@ const onSuccessOfferSubmit = () => {
 };
 
 // ошибка при добавлении объявления
-const onErrorOfferSubmit = (e) => {
-  console.error(e);
+const onErrorOfferSubmit = (error) => {
+  console.error(error);
   showModal('Объявление не добавлено', false);
 };
 
+function hideError (input) {
+  input.classList.remove('error-input');
+}
 
-const validate = (e) => {
-  e.preventDefault();
-  // получить title и проверить что введенное в него значение есть и имеет длину > 30 и < 100 символов
+
+const validate = (error) => {
+
+  error.preventDefault();
+
   const valueLength =  titleInput.value.length;
-  if (valueLength < MIN_TITLE_LENGTH && valueLength > MAX_TITLE_LENGTH) {
-    console.log('не прошла валидация1');
+  if (valueLength < MIN_TITLE_LENGTH || valueLength > MAX_TITLE_LENGTH) {
+    titleInput.classList.add('error-input');
+    setTimeout(hideError , 1000, titleInput);
+
     return false;
   }
 
-  // получить PRICE_RANGE_BY_TYPE[type.value] (min, max)
   const range = PRICE_RANGE_BY_TYPE[type.value];
 
-  // получить "цена за ночь" введенное значение и проверить что цена введена, это число, и что оно > min и < max
   if (isNaN(parseFloat(priceInput.value)) || priceInput.value < range.min || priceInput.value > range.max) {
+    priceInput.classList.add('error-input');
+    setTimeout(hideError , 1000, priceInput);
+
     return false;
   }
 
@@ -150,9 +158,20 @@ const validate = (e) => {
   sendData(onSuccessOfferSubmit,onErrorOfferSubmit,new FormData(e.target));
 };
 
+const setMinMax = () => {
+
+  const range = PRICE_RANGE_BY_TYPE[type.value];
+  priceInput.min = range.min;
+  priceInput.max = range.max;
+  priceInput.placeholder = range.min;
+
+};
+
 
 export const initForm = () => {
   setOptionsForGuestsCount(roomsNumber.value);
+  setMinMax();
+
 
   timeIn.addEventListener('change', (evt) => {
     const value = evt.target.value;
