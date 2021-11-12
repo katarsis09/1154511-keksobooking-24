@@ -16,8 +16,7 @@ export const onSuccessOffersLoaded = (data) => {
 
 
 // ошибка при загрузке объявлений
-const onErrorOffersLoaded = (error) => {
-  console.error(error);
+const onErrorOffersLoaded = () => {
   showModal('', false);
 };
 
