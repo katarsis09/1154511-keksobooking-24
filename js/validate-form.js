@@ -1,13 +1,11 @@
 import { sendData } from './api.js';
 import { showModal } from './modal.js';
+import { MAIN_PIN_INIT_LOCATION } from './constant.js';
 
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
-const MAIN_PIN_INIT_LOCATION = {
-  lat: 35.6895,
-  lng: 139.692,
-};
+const DELAY = 1000;
 
 const PRICE_RANGE_BY_TYPE = {
   flat: {
@@ -111,8 +109,7 @@ export const resetApp = () => {
 
 buttonReset.addEventListener('click', (evt) => {
   evt.preventDefault();
-  form.reset();
-  formFilters.reset();
+  resetApp();
   address.value = `${MAIN_PIN_INIT_LOCATION.lat}, ${MAIN_PIN_INIT_LOCATION.lng}`;
 });
 
@@ -140,7 +137,7 @@ const validate = (error) => {
   const valueLength =  titleInput.value.length;
   if (valueLength < MIN_TITLE_LENGTH || valueLength > MAX_TITLE_LENGTH) {
     titleInput.classList.add('error-input');
-    setTimeout(hideError , 1000, titleInput);
+    setTimeout(hideError , DELAY, titleInput);
 
     return false;
   }
@@ -149,16 +146,16 @@ const validate = (error) => {
 
   if (isNaN(parseFloat(priceInput.value)) || priceInput.value < range.min || priceInput.value > range.max) {
     priceInput.classList.add('error-input');
-    setTimeout(hideError , 1000, priceInput);
+    setTimeout(hideError , DELAY, priceInput);
 
     return false;
   }
 
   // если все ок, то вызываем form.submit()
-  sendData(onSuccessOfferSubmit,onErrorOfferSubmit,new FormData(e.target));
+  sendData(onSuccessOfferSubmit,onErrorOfferSubmit,new FormData(error.target));
 };
 
-const setMinMax = () => {
+const setRangeForPrice = () => {
 
   const range = PRICE_RANGE_BY_TYPE[type.value];
   priceInput.min = range.min;
@@ -170,7 +167,7 @@ const setMinMax = () => {
 
 export const initForm = () => {
   setOptionsForGuestsCount(roomsNumber.value);
-  setMinMax();
+  setRangeForPrice();
 
 
   timeIn.addEventListener('change', (evt) => {

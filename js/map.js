@@ -1,11 +1,7 @@
 import { activateForm } from './form.js';
 import { createOfferCard } from './card.js';
+import { MAIN_PIN_INIT_LOCATION } from './constant.js';
 
-
-const MAIN_PIN_INIT_LOCATION = {
-  lat: 35.6895,
-  lng: 139.692,
-};
 
 const address = document.querySelector('#address');
 address.value = `${MAIN_PIN_INIT_LOCATION.lat}, ${MAIN_PIN_INIT_LOCATION.lng}`;
@@ -15,7 +11,6 @@ const myMap = L.map('map-canvas');
 
 export const initMap = () => {
   myMap.on('load', () => {
-    console.log('Карта инициализирована');
     activateForm();
   })
     .setView(MAIN_PIN_INIT_LOCATION, 10);
@@ -37,8 +32,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.6895,
-    lng: 139.692,
+    lat: MAIN_PIN_INIT_LOCATION.lat,
+    lng: MAIN_PIN_INIT_LOCATION.lng,
   },
   {
     draggable: true,
@@ -85,6 +80,5 @@ export const renderPins = (offers) => {
       .addTo(markerGroup)
       .bindPopup(createOfferCard(offer));
   });
-
 
 };

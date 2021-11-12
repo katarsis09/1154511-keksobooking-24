@@ -6,6 +6,9 @@ const TYPE_TO_NAME = {
   'hotel': 'Отель',
 };
 
+const WIDTH = 45;
+const HEIGHT = 40;
+
 export const renderTextToCard = (className, value, item) => {
   const element = item.querySelector(className);
 
@@ -48,7 +51,6 @@ export const fillCard = (cardData, item) => {
     });
   }
 
-
   const photos = item.querySelector('.popup__photos');
   photos.innerHTML = '';
 
@@ -56,22 +58,19 @@ export const fillCard = (cardData, item) => {
     cardData.offer.photos.forEach((photo) =>{
       const photoListItem = document.createElement('img');
       photoListItem.src = photo;
-      photoListItem.width = 45;
-      photoListItem.height = 40;
+      photoListItem.width = WIDTH;
+      photoListItem.height = HEIGHT;
       photoListItem.classList.add('popup__photo');
       photos.appendChild(photoListItem);
     });
   }
 
-
   return item;
-
 
 };
 
 export const createOfferCard = (offer) => {
   const balloonTemplate = document.querySelector('#card').content.querySelector('article.popup');
   const popupElement = balloonTemplate.cloneNode(true);
-  const filledCard = fillCard(offer, popupElement);
-  return filledCard;
+  return fillCard(offer, popupElement);
 };

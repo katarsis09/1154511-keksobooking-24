@@ -1,27 +1,23 @@
-const deactivateForm = () => {
-  const form = document.querySelector('.ad-form');
-  form.classList.add('ad-form--disabled');
+const form = document.querySelector('.ad-form');
+const formElements = form.querySelectorAll('fieldset');
+const mapFilter = document.querySelector('.map__filters');
 
-  const formElements = form.querySelectorAll('fieldset');
+const setFieldsetDisabled = (value) => {
   formElements.forEach((fieldset) => {
-    fieldset.disabled = true;
+    fieldset.disabled = value;
   });
+};
 
-  const mapFilter = document.querySelector('.map__filters');
+const deactivateForm = () => {
+  form.classList.add('ad-form--disabled');
+  setFieldsetDisabled(true);
   mapFilter.classList.add('ad-form--disabled');
 };
 
 
 const activateForm = () => {
-  const form = document.querySelector('.ad-form');
   form.classList.remove('ad-form--disabled');
-
-  const formElements = form.querySelectorAll('fieldset');
-  formElements.forEach((fieldset) => {
-    fieldset.disabled = false;
-  });
-
-  const mapFilter = document.querySelector('.map__filters');
+  setFieldsetDisabled(false);
   mapFilter.classList.remove('ad-form--disabled');
 };
 
