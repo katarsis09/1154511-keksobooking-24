@@ -2,15 +2,6 @@ import { offers } from './main.js';
 import { renderPins } from './map.js';
 import { debounce } from './utils/debounce.js';
 
-
-const ELEMENTS_QUANTITY = 10;
-const DEFAULT_VALUE = 'any';
-const typeSelect = document.querySelector('#housing-type');
-const roomsSelect = document.querySelector('#housing-rooms');
-const guestsSelect = document.querySelector('#housing-guests');
-const priceSelect = document.querySelector('#housing-price');
-const filterSelect = document.querySelector('.map__filters');
-
 const PRICE_RANGES = {
   low: {
     min: 0,
@@ -25,6 +16,14 @@ const PRICE_RANGES = {
     max: 1000000,
   },
 };
+
+const ELEMENTS_QUANTITY = 10;
+const DEFAULT_VALUE = 'any';
+const typeSelect = document.querySelector('#housing-type');
+const roomsSelect = document.querySelector('#housing-rooms');
+const guestsSelect = document.querySelector('#housing-guests');
+const priceSelect = document.querySelector('#housing-price');
+const filterSelect = document.querySelector('.map__filters');
 
 
 const filterByType = (offer) => {
@@ -65,8 +64,8 @@ const filterByGuests = (offer) => {
 const filterOffersByFeatures = (offer) => {
   const pceudoFeatures = document.querySelectorAll('input[name="features"]:checked');
   const arrayOfFeatures = Array.from(pceudoFeatures);
-  const mapped = arrayOfFeatures.map((el) => el.value);
-  return mapped.every((el) => offer.offer.features && offer.offer.features.includes(el));
+  const mapped = arrayOfFeatures.map((element) => element.value);
+  return mapped.every((element) => offer.offer.features && offer.offer.features.includes(element));
 };
 
 
