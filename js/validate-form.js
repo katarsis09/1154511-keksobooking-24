@@ -120,8 +120,7 @@ const onSuccessOfferSubmit = () => {
 };
 
 // ошибка при добавлении объявления
-const onErrorOfferSubmit = (error) => {
-  console.error(error);
+const onErrorOfferSubmit = () => {
   showModal('Объявление не добавлено', false);
 };
 
