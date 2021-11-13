@@ -1,59 +1,72 @@
 const main = document.querySelector('main');
-
-const templateSuccess = document.querySelector('#success')
+const successModalTemplate = document.querySelector('#success')
   .content.querySelector('.success');
-const successCopy = templateSuccess.cloneNode(true);
 
-successCopy.style.display = 'none';
-main.appendChild(successCopy);
-
-
-const templateError = document.querySelector('#error')
+const errorModalTemplate = document.querySelector('#error')
   .content.querySelector('.error');
-const error = templateError.cloneNode(true);
 
-error.style.display = 'none';
-main.appendChild(error);
+const hideElement = (element) => {
+  element.style.display = 'none';
+};
+
+const getModalFromTemplate = (template) => {
+  const copy = template.cloneNode(true);
+  main.appendChild(copy);
+  hideElement(copy);
+  return copy;
+};
+
+const successModal = getModalFromTemplate(successModalTemplate);
+const errorModal = getModalFromTemplate(errorModalTemplate);
 
 
-document.addEventListener('click', () => {
-  successCopy.style.display = 'none';
-});
+const hideSuccessByClick = () => {
+  hideElement(successModal);
+  document.removeEventListener('click', hideSuccessByClick);
+};
 
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape')
-  {successCopy.style.display = 'none';}
-});
+const hideErrorByClick = () => {
+  hideElement(errorModal);
+  document.removeEventListener('click', hideErrorByClick);
+};
+
+const hideSuccessByEsc = (evt) => {
+  if (evt.key === 'Escape') {
+    hideElement(successModal);
+  }
+  document.removeEventListener('keydown', hideSuccessByEsc);
+};
+
+const hideErrorByEsc = (evt) => {
+  if (evt.key === 'Escape') {
+    hideElement(errorModal);
+  }
+  document.removeEventListener('keydown', hideErrorByEsc);
+};
 
 
 const showModal = (text, success) => {
 
   if (success) {
-    const successMessage = successCopy.querySelector('.success__message');
+    const successMessage = successModal.querySelector('.success__message');
     if (text) {
       successMessage.textContent = text;
     }
-    successCopy.style.display = 'block';
+    successModal.style.display = 'block';
+    document.addEventListener('click', hideSuccessByClick);
+    document.addEventListener('keydown', hideSuccessByEsc);
 
   } else {
-    const errorMessage = error.querySelector('.error__message');
-
+    const errorMessage = errorModal.querySelector('.error__message');
     if (text) {
       errorMessage.textContent = text;
     }
-    error.style.display = 'block';
-    successCopy.style.display = 'none';
-
-    document.addEventListener('click', () => {
-      error.style.display = 'none';
-    });
-
-    document.addEventListener('keydown', (evt) => {
-      if (evt.key === 'Escape')
-      {error.style.display = 'none';}
-    });
-
+    errorModal.style.display = 'block';
+    document.addEventListener('click', hideErrorByClick);
+    document.addEventListener('keydown', hideErrorByEsc);
   }
+
+
 };
 
 
