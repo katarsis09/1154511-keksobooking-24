@@ -82,3 +82,16 @@ export const renderPins = (offers) => {
   });
 
 };
+
+export const resetMapAndMarker = () => {
+  mainPinMarker.setLatLng({
+    lat: MAIN_PIN_INIT_LOCATION.lat,
+    lng: MAIN_PIN_INIT_LOCATION.lng,
+  });
+
+  myMap.setView({
+    lat: MAIN_PIN_INIT_LOCATION.lat,
+    lng: MAIN_PIN_INIT_LOCATION.lng,
+  }, 10);
+  myMap.closePopup();
+};
