@@ -1,7 +1,7 @@
 import { sendData } from './api.js';
 import { showModal } from './modal.js';
 import { MAIN_PIN_INIT_LOCATION } from './constant.js';
-
+import { resetMapAndMarker } from './map.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -102,6 +102,7 @@ const setOptionsForGuestsCount = (rooms) => {
 export const resetApp = () => {
   form.reset();
   formFilters.reset();
+  resetMapAndMarker();
   address.value = `${MAIN_PIN_INIT_LOCATION.lat}, ${MAIN_PIN_INIT_LOCATION.lng}`;
 };
 

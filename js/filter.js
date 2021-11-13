@@ -69,11 +69,11 @@ const filterOffersByFeatures = (offer) => {
 };
 
 
-const filteredFunction = [filterByType, filterByPrice, filterOffersByFeatures, filterByGuests, filterByRooms];
+const filterFunctions = [filterByType, filterByPrice, filterOffersByFeatures, filterByGuests, filterByRooms];
 
 
 const filterOffers = (list) => {
-  const filtered = list.filter((offer) => filteredFunction.every((func) => func(offer)));
+  const filtered = list.filter((offer) => filterFunctions.every((func) => func(offer)));
   renderPins(filtered.slice(0, ELEMENTS_QUANTITY));
 };
 
