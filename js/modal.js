@@ -1,3 +1,5 @@
+import { activateForm, deactivateForm } from './form.js';
+
 const main = document.querySelector('main');
 const successModalTemplate = document.querySelector('#success')
   .content.querySelector('.success');
@@ -23,30 +25,35 @@ const errorModal = getModalFromTemplate(errorModalTemplate);
 const hideSuccessByClick = () => {
   hideElement(successModal);
   document.removeEventListener('click', hideSuccessByClick);
+  activateForm();
 };
 
 const hideErrorByClick = () => {
   hideElement(errorModal);
   document.removeEventListener('click', hideErrorByClick);
+  activateForm();
 };
 
 const hideSuccessByEsc = (evt) => {
   if (evt.key === 'Escape') {
     hideElement(successModal);
+    document.removeEventListener('keydown', hideSuccessByEsc);
+    activateForm();
   }
-  document.removeEventListener('keydown', hideSuccessByEsc);
+
 };
 
 const hideErrorByEsc = (evt) => {
   if (evt.key === 'Escape') {
     hideElement(errorModal);
+    document.removeEventListener('keydown', hideErrorByEsc);
+    activateForm();
   }
-  document.removeEventListener('keydown', hideErrorByEsc);
+
 };
 
 
 const showModal = (text, success) => {
-
   if (success) {
     const successMessage = successModal.querySelector('.success__message');
     if (text) {
@@ -55,6 +62,7 @@ const showModal = (text, success) => {
     successModal.style.display = 'block';
     document.addEventListener('click', hideSuccessByClick);
     document.addEventListener('keydown', hideSuccessByEsc);
+
 
   } else {
     const errorMessage = errorModal.querySelector('.error__message');
@@ -65,8 +73,7 @@ const showModal = (text, success) => {
     document.addEventListener('click', hideErrorByClick);
     document.addEventListener('keydown', hideErrorByEsc);
   }
-
-
+  deactivateForm();
 };
 
 
