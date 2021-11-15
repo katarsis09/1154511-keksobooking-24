@@ -22,32 +22,32 @@ const successModal = getModalFromTemplate(successModalTemplate);
 const errorModal = getModalFromTemplate(errorModalTemplate);
 
 
-const hideSuccessByClick = () => {
+const onSuccessModalClick = () => {
   hideElement(successModal);
-  document.removeEventListener('click', hideSuccessByClick);
+  document.removeEventListener('click', onSuccessModalClick);
   activateForm();
 };
 
-const hideErrorByClick = () => {
+const onErrorModalClick = () => {
   hideElement(errorModal);
-  document.removeEventListener('click', hideErrorByClick);
-  activateForm();
+  document.removeEventListener('click', onErrorModalClick);
+  deactivateForm();
 };
 
-const hideSuccessByEsc = (evt) => {
+const onSuccessModalEsc = (evt) => {
   if (evt.key === 'Escape') {
     hideElement(successModal);
-    document.removeEventListener('keydown', hideSuccessByEsc);
+    document.removeEventListener('keydown', onSuccessModalEsc);
     activateForm();
   }
 
 };
 
-const hideErrorByEsc = (evt) => {
+const onErrorModalEsc = (evt) => {
   if (evt.key === 'Escape') {
     hideElement(errorModal);
-    document.removeEventListener('keydown', hideErrorByEsc);
-    activateForm();
+    document.removeEventListener('keydown', onErrorModalEsc);
+    deactivateForm();
   }
 
 };
@@ -60,20 +60,20 @@ const showModal = (text, success) => {
       successMessage.textContent = text;
     }
     successModal.style.display = 'block';
-    document.addEventListener('click', hideSuccessByClick);
-    document.addEventListener('keydown', hideSuccessByEsc);
+    document.addEventListener('click', onSuccessModalClick);
+    document.addEventListener('keydown', onSuccessModalEsc);
 
 
   } else {
     const errorMessage = errorModal.querySelector('.error__message');
+
     if (text) {
       errorMessage.textContent = text;
     }
     errorModal.style.display = 'block';
-    document.addEventListener('click', hideErrorByClick);
-    document.addEventListener('keydown', hideErrorByEsc);
+    document.addEventListener('click', onErrorModalClick);
+    document.addEventListener('keydown', onErrorModalEsc);
   }
-  deactivateForm();
 };
 
 

@@ -1,7 +1,9 @@
 import { sendData } from './api.js';
 import { showModal } from './modal.js';
 import { MAIN_PIN_INIT_LOCATION } from './constant.js';
-import { resetMapAndMarker } from './map.js';
+import { resetMapAndMarker, renderPins } from './map.js';
+import { ELEMENTS_QUANTITY } from './constant.js';
+import { offers } from './main.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -103,6 +105,7 @@ export const resetApp = () => {
   form.reset();
   formFilters.reset();
   resetMapAndMarker();
+  renderPins(offers.slice(0, ELEMENTS_QUANTITY));
   address.value = `${MAIN_PIN_INIT_LOCATION.lat}, ${MAIN_PIN_INIT_LOCATION.lng}`;
 };
 
