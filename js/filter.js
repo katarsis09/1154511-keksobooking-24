@@ -1,6 +1,7 @@
 import { offers } from './main.js';
 import { renderPins } from './map.js';
 import { debounce } from './utils/debounce.js';
+import { ELEMENTS_QUANTITY } from './constant.js';
 
 const PRICE_RANGES = {
   low: {
@@ -17,7 +18,6 @@ const PRICE_RANGES = {
   },
 };
 
-const ELEMENTS_QUANTITY = 10;
 const DEFAULT_VALUE = 'any';
 const typeSelect = document.querySelector('#housing-type');
 const roomsSelect = document.querySelector('#housing-rooms');
@@ -72,7 +72,7 @@ const filterOffersByFeatures = (offer) => {
 const filterFunctions = [filterByType, filterByPrice, filterOffersByFeatures, filterByGuests, filterByRooms];
 
 
-const filterOffers = (list) => {
+export const filterOffers = (list) => {
   const filtered = list.filter((offer) => filterFunctions.every((func) => func(offer)));
   renderPins(filtered.slice(0, ELEMENTS_QUANTITY));
 };

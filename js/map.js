@@ -53,10 +53,13 @@ mainPinMarker.on('move', (evt) => {
 
 const markerGroup = L.layerGroup().addTo(myMap);
 
+export const removePins = () => {
+  markerGroup.clearLayers();
+};
 
 export const renderPins = (offers) => {
 
-  markerGroup.clearLayers();
+  removePins();
 
   offers.forEach((offer) => {
     const icon = L.icon({
