@@ -96,15 +96,29 @@ const setOptionsForGuestsCount = (rooms) => {
     optionElement.value = option.value;
     optionElement.textContent = option.text;
     guestsNumber.appendChild(optionElement);
+
   });
+
 };
+
+const setRangeForPrice = () => {
+
+  const range = PRICE_RANGE_BY_TYPE[type.value];
+  priceInput.min = range.min;
+  priceInput.max = range.max;
+  priceInput.placeholder = range.min;
+
+};
+
 
 // функция сброса формы
 
 export const resetApp = () => {
   form.reset();
   formFilters.reset();
+  setOptionsForGuestsCount(roomsNumber.value);
   resetMapAndMarker();
+  setRangeForPrice();
   renderPins(offers.slice(0, ELEMENTS_QUANTITY));
   address.value = `${MAIN_PIN_INIT_LOCATION.lat}, ${MAIN_PIN_INIT_LOCATION.lng}`;
 };
@@ -137,6 +151,7 @@ const validate = (error) => {
 
   error.preventDefault();
 
+
   const valueLength =  titleInput.value.length;
   if (valueLength < MIN_TITLE_LENGTH || valueLength > MAX_TITLE_LENGTH) {
     titleInput.classList.add('error-input');
@@ -156,15 +171,6 @@ const validate = (error) => {
 
   // если все ок, то вызываем form.submit()
   sendData(onSuccessOfferSubmit,onErrorOfferSubmit,new FormData(error.target));
-};
-
-const setRangeForPrice = () => {
-
-  const range = PRICE_RANGE_BY_TYPE[type.value];
-  priceInput.min = range.min;
-  priceInput.max = range.max;
-  priceInput.placeholder = range.min;
-
 };
 
 

@@ -18,7 +18,7 @@ export const onSuccessOffersLoaded = (data) => {
 // ошибка при загрузке объявлений
 const onErrorOffersLoaded = () => {
   showModal('', false);
-  deactivateForm();
+  //deactivateForm();
 };
 
 getData(onSuccessOffersLoaded, onErrorOffersLoaded);

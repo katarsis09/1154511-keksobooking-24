@@ -31,7 +31,7 @@ const onSuccessModalClick = () => {
 const onErrorModalClick = () => {
   hideElement(errorModal);
   document.removeEventListener('click', onErrorModalClick);
-  deactivateForm();
+  activateForm();
 };
 
 const onSuccessModalEsc = (evt) => {
@@ -47,13 +47,14 @@ const onErrorModalEsc = (evt) => {
   if (evt.key === 'Escape') {
     hideElement(errorModal);
     document.removeEventListener('keydown', onErrorModalEsc);
-    deactivateForm();
+    activateForm();
   }
 
 };
 
 
 const showModal = (text, success) => {
+  deactivateForm();
   if (success) {
     const successMessage = successModal.querySelector('.success__message');
     if (text) {
