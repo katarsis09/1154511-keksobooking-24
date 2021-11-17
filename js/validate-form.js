@@ -4,6 +4,7 @@ import { MAIN_PIN_INIT_LOCATION } from './constant.js';
 import { resetMapAndMarker, renderPins } from './map.js';
 import { ELEMENTS_QUANTITY } from './constant.js';
 import { offers } from './main.js';
+import { activateFilterForm } from './form.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -140,6 +141,7 @@ const onSuccessOfferSubmit = () => {
 // ошибка при добавлении объявления
 const onErrorOfferSubmit = () => {
   showModal('Объявление не добавлено', false);
+  activateFilterForm();
 };
 
 function hideError (input) {

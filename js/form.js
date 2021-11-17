@@ -8,17 +8,21 @@ const setFieldsetDisabled = (value) => {
   });
 };
 
-const deactivateForm = () => {
+const deactivateAllForms = () => {
   form.classList.add('ad-form--disabled');
   setFieldsetDisabled(true);
   mapFilter.classList.add('ad-form--disabled');
 };
 
 
-const activateForm = () => {
+const activateOfferForm = () => {
   form.classList.remove('ad-form--disabled');
   setFieldsetDisabled(false);
+};
+
+const activateFilterForm = () => {
   mapFilter.classList.remove('ad-form--disabled');
 };
 
-export { activateForm, deactivateForm };
+
+export { activateOfferForm, deactivateAllForms, activateFilterForm  };
