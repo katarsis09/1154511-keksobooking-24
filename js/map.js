@@ -1,4 +1,4 @@
-import { activateForm } from './form.js';
+import { activateOfferForm } from './form.js';
 import { createOfferCard } from './card.js';
 import { MAIN_PIN_INIT_LOCATION } from './constant.js';
 
@@ -11,7 +11,7 @@ const myMap = L.map('map-canvas');
 
 export const initMap = () => {
   myMap.on('load', () => {
-    activateForm();
+    activateOfferForm();
   })
     .setView(MAIN_PIN_INIT_LOCATION, 10);
 

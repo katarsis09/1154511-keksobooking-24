@@ -1,4 +1,4 @@
-import { deactivateForm } from './form.js';
+import { deactivateAllForms, activateFilterForm } from './form.js';
 import { initForm } from './validate-form.js';
 import { initMap, renderPins } from './map.js';
 import { getData } from './api.js';
@@ -12,19 +12,19 @@ let offers = [];
 export const onSuccessOffersLoaded = (data) => {
   renderPins(data.slice(0, ELEMENTS_QUANTITY));
   offers = data;
+  activateFilterForm();
 };
 
 
 // ошибка при загрузке объявлений
 const onErrorOffersLoaded = () => {
   showModal('', false);
-  deactivateForm();
 };
 
 getData(onSuccessOffersLoaded, onErrorOffersLoaded);
 
 
-deactivateForm();
+deactivateAllForms();
 initMap();
 initForm();
 

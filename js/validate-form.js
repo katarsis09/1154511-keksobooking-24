@@ -4,6 +4,7 @@ import { MAIN_PIN_INIT_LOCATION } from './constant.js';
 import { resetMapAndMarker, renderPins } from './map.js';
 import { ELEMENTS_QUANTITY } from './constant.js';
 import { offers } from './main.js';
+import { activateFilterForm } from './form.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -96,15 +97,29 @@ const setOptionsForGuestsCount = (rooms) => {
     optionElement.value = option.value;
     optionElement.textContent = option.text;
     guestsNumber.appendChild(optionElement);
+
   });
+
 };
+
+const setRangeForPrice = () => {
+
+  const range = PRICE_RANGE_BY_TYPE[type.value];
+  priceInput.min = range.min;
+  priceInput.max = range.max;
+  priceInput.placeholder = range.min;
+
+};
+
 
 // функция сброса формы
 
 export const resetApp = () => {
   form.reset();
   formFilters.reset();
+  setOptionsForGuestsCount(roomsNumber.value);
   resetMapAndMarker();
+  setRangeForPrice();
   renderPins(offers.slice(0, ELEMENTS_QUANTITY));
   address.value = `${MAIN_PIN_INIT_LOCATION.lat}, ${MAIN_PIN_INIT_LOCATION.lng}`;
 };
@@ -126,6 +141,7 @@ const onSuccessOfferSubmit = () => {
 // ошибка при добавлении объявления
 const onErrorOfferSubmit = () => {
   showModal('Объявление не добавлено', false);
+  activateFilterForm();
 };
 
 function hideError (input) {
@@ -136,6 +152,7 @@ function hideError (input) {
 const validate = (error) => {
 
   error.preventDefault();
+
 
   const valueLength =  titleInput.value.length;
   if (valueLength < MIN_TITLE_LENGTH || valueLength > MAX_TITLE_LENGTH) {
@@ -156,15 +173,6 @@ const validate = (error) => {
 
   // если все ок, то вызываем form.submit()
   sendData(onSuccessOfferSubmit,onErrorOfferSubmit,new FormData(error.target));
-};
-
-const setRangeForPrice = () => {
-
-  const range = PRICE_RANGE_BY_TYPE[type.value];
-  priceInput.min = range.min;
-  priceInput.max = range.max;
-  priceInput.placeholder = range.min;
-
 };
 
 
