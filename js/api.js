@@ -30,7 +30,6 @@ const sendData = (onSuccess, onError, body) => {
     })
     .catch((error) => {
       onError(error);
-      console.error(error);
     });
 };
 
