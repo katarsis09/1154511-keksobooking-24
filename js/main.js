@@ -1,4 +1,4 @@
-import { deactivateAllForms, activateFilterForm } from './form.js';
+import { activateFilterForm, deactivateAllForms } from './form.js';
 import { initForm } from './validate-form.js';
 import { initMap, renderPins } from './map.js';
 import { getData } from './api.js';
