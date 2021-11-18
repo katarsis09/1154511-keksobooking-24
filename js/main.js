@@ -5,7 +5,7 @@ import { getData } from './api.js';
 import { showModal } from './modal.js';
 import { initFilters } from './filter.js';
 import { ELEMENTS_QUANTITY } from './constant.js';
-
+import  './avatar';
 
 let offers = [];
 // успешная загрузка объявлений
