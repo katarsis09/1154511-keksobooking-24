@@ -1,3 +1,5 @@
+import { offers } from './main.js';
+
 const form = document.querySelector('.ad-form');
 const formElements = form.querySelectorAll('fieldset');
 const mapFilter = document.querySelector('.map__filters');
@@ -8,9 +10,12 @@ const setFieldsetDisabled = (value) => {
   });
 };
 
-const deactivateAllForms = () => {
+const deactivateOfferForm = () => {
   form.classList.add('ad-form--disabled');
   setFieldsetDisabled(true);
+};
+
+const deactivateFilterForm = () => {
   mapFilter.classList.add('ad-form--disabled');
 };
 
@@ -21,8 +26,20 @@ const activateOfferForm = () => {
 };
 
 const activateFilterForm = () => {
-  mapFilter.classList.remove('ad-form--disabled');
+  if (offers.length) {
+    mapFilter.classList.remove('ad-form--disabled');
+  }
+};
+
+const activateAllForms = () => {
+  activateOfferForm();
+  activateFilterForm();
+};
+
+const deactivateAllForms = () => {
+  deactivateFilterForm();
+  deactivateOfferForm();
 };
 
 
-export { activateOfferForm, deactivateAllForms, activateFilterForm  };
+export { activateOfferForm, activateFilterForm, activateAllForms, deactivateAllForms };

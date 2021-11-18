@@ -1,4 +1,4 @@
-import { activateOfferForm, deactivateAllForms, activateFilterForm } from './form.js';
+import { deactivateAllForms, activateAllForms  } from './form.js';
 
 const main = document.querySelector('main');
 const successModalTemplate = document.querySelector('#success')
@@ -25,22 +25,20 @@ const errorModal = getModalFromTemplate(errorModalTemplate);
 const onSuccessModalClick = () => {
   hideElement(successModal);
   document.removeEventListener('click', onSuccessModalClick);
-  activateOfferForm();
-  activateFilterForm();
+  activateAllForms();
 };
 
 const onErrorModalClick = () => {
   hideElement(errorModal);
   document.removeEventListener('click', onErrorModalClick);
-  activateOfferForm();
+  activateAllForms();
 };
 
 const onSuccessModalEsc = (evt) => {
   if (evt.key === 'Escape') {
     hideElement(successModal);
     document.removeEventListener('keydown', onSuccessModalEsc);
-    activateOfferForm();
-    activateFilterForm();
+    activateAllForms();
   }
 
 };
@@ -49,7 +47,7 @@ const onErrorModalEsc = (evt) => {
   if (evt.key === 'Escape') {
     hideElement(errorModal);
     document.removeEventListener('keydown', onErrorModalEsc);
-    activateOfferForm();
+    activateAllForms();
   }
 
 };
