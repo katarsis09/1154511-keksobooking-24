@@ -5,7 +5,7 @@ import { getData } from './api.js';
 import { showModal } from './modal.js';
 import { initFilters } from './filter.js';
 import { ELEMENTS_QUANTITY } from './constant.js';
-import  './avatar.js';
+import  { downloadPicture } from './avatar.js';
 
 let offers = [];
 // успешная загрузка объявлений
@@ -29,6 +29,8 @@ initMap();
 initForm();
 
 initFilters();
+
+downloadPicture();
 
 export { offers };
 

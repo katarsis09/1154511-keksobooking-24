@@ -7,32 +7,32 @@ const filePreview = document.querySelector('.ad-form__photo');
 
 const avatarPreviewClone = avatarPreview.cloneNode(true);
 
-
-avatarChooser.addEventListener('change', () => {
-  const file = avatarChooser.files[0];
+const getBlobUrl = (input) => {
+  const file = input.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((element) => fileName.endsWith(element));
 
   if (matches) {
-    avatarPreview.src = URL.createObjectURL(file);
+    return URL.createObjectURL(file);
   }
-});
 
-fileChooser.addEventListener('change', () => {
-  const file = fileChooser.files[0];
-  const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((element) => fileName.endsWith(element));
+};
 
-  if (matches) {
+const downloadPicture = () => {
+  avatarChooser.addEventListener('change', () => {
+    avatarPreview.src = getBlobUrl(avatarChooser);
+  });
 
-    avatarPreviewClone.src = URL.createObjectURL(file);
+  fileChooser.addEventListener('change', () => {
+    avatarPreviewClone.src = getBlobUrl(fileChooser);
     filePreview.append(avatarPreviewClone);
-  }
-});
+  });
+
+};
 
 const clearPreview = () => {
   avatarPreview.src = 'img/muffin-grey.svg';
   avatarPreviewClone.remove();
 };
 
-export { clearPreview };
+export { clearPreview, downloadPicture };
